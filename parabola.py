@@ -5,16 +5,17 @@ y_multi = 6#ajuda na representação de y na parabola
 x_positions = []
 y_positions = []
 
+
 repeation = 12
 
 #essa é a terceira função, ela define as linhas
-def draw_lines():
-    turt.clear()#limpeza dos pontos
+def draw_lines(n):
+    
     print(str(x_positions))
     print(str(y_positions))
     turt.up()
     print('im drawing lines dude, chill tf down ')
-    turt.goto(0,-100)#volta ao lugar do inicio, SEMPRE seja igual ao do grafico
+    turt.goto(0,0)#volta ao lugar do inicio, SEMPRE seja igual ao do grafico
     #esse for loop é para colocar o ponto em antigas cordenadas, essa passagem faz com que a
     #linha siga ela, assim montando um grafico
     for i in range(len(x_positions)):
@@ -26,22 +27,29 @@ def draw_lines():
         
         #esse goto coloca as cordenadas do ponto em suas antigas posições, assim a parabola
         #é retraçada e assim monta uma parabola em uma linha continua, não em pontos
-        turt.goto(x_positions[i], y_positions[i]-100)
+        if n == 0:
+            turt.goto(x_positions[i], y_positions[i]-100)
+        elif n == 1:
+            turt.goto(x_positions[i], y_positions[i]+0)
         print(str(x_positions[i]))
         print(str(y_positions[i]))
         
         turt.down()
+    turt.up()
+    turt.goto(-500, 0)
+    turt.down()
+    turt.goto(-500, 0)
         
 
 
 
-def draw_graph(x,y, end, i):
+def draw_graph(x,y, end, i, n):
     
     turt.getscreen()
     #esses multis estão aqui para ajudar a representação no grafico
     x_turte = x*x_multi
     y_turte = y*y_multi
-    turt.goto(0, -100)
+    
     print(str(x) + ',' + str(y) + ' originals')
     #print(str(offsetx) + ',' + str(offsety) + ' offsets')
     print(str(x_turte) + ',' + str(y_turte) + ' turtes')
@@ -71,7 +79,7 @@ def draw_graph(x,y, end, i):
     #usamos um True e False na função do grafico
     else:
         print('im end evil brother, i am...STARTTTTTTTTTTTTTTTT')
-        draw_lines()
+        draw_lines(n)
         
         
 def math_time():
@@ -85,28 +93,41 @@ def math_time():
     rootwindow.call('wm', 'attributes', '.', '-topmost', '1')
     rootwindow.call('wm', 'attributes', '.', '-topmost', '0')
 
-    
-    for i in range(repeation):
-        i += 1
-        #esse for loop esta aqui para representar varios pontos x
+    for n in range(2):
         turt.up()
-        x = i
-        #para mudar o tamanho, mude o termo do meio
-        #para mudar a quantidade de pontos, mude os primeiros termos
-        #mas não se esqueçade mudar a variavel repeation e o i do x
-        y = x**2*-1 + 12*x + 18
+        j = 0
+        for i in range(repeation):
+            if n == 0:
+                j = i+1
+                turt.goto(0, -100)
+            elif n == 1:
+                turt.goto(0, 0)
+                if i == 0:
+                    x_positions.clear()
+                    y_positions.clear()
+                j = i+1
+            #esse for loop esta aqui para representar varios pontos x
+            turt.up()
+            x = j
+            #para mudar o tamanho, mude o termo do meio
+            #para mudar a quantidade de pontos, mude os primeiros termos
+            #mas não se esqueçade mudar a variavel repeation e o i do x
+            if n == 0:
+                y = x**2*-1 + 12*x + 18
+            else:
+                y = x**2*1 - 12*x + 18
+                
 
+            #isso é para decidir quanto a linha sera desenhada, esse -1 esta aqui pois se não
+            #o codigo quebra, talvez seja devido que o index começa no 0, e o repeation e o index
+            #não se encontram devido a aquele unico digito de diferença
 
-        #isso é para decidir quanto a linha sera desenhada, esse -1 esta aqui pois se não
-        #o codigo quebra, talvez seja devido que o index começa no 0, e o repeation e o index
-        #não se encontram devido a aquele unico digito de diferença
-
-        #eu tentei consertar mudando algumas coisas, não garanto que esteja perfeito, esse codigo
-        #é sustentado por cuspe e fita, a qualquer momento isso se quebra
-        if i == repeation:
-            draw_graph(x,y, True, i)
-        else: 
-            draw_graph(x,y, False, i)
+            #eu tentei consertar mudando algumas coisas, não garanto que esteja perfeito, esse codigo
+            #é sustentado por cuspe e fita, a qualquer momento isso se quebra
+            if j == repeation or j == repeation*-1:
+                draw_graph(x,y, True, j, n)
+            else: 
+                draw_graph(x,y, False, j, n)
 
 
 #define qual grafico sera representado
