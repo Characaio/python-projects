@@ -1,12 +1,12 @@
 import turtle as turt
 x = 0
-x_multi = 8 #ajuda na representação de x na parabola
+x_multi = 15 #ajuda na representação de x na parabola
 y_multi = 6#ajuda na representação de y na parabola
 x_positions = []
 y_positions = []
 
 
-repeation = 12
+repeation = 22
 
 #essa é a terceira função, ela define as linhas
 def draw_lines(n):
@@ -28,13 +28,19 @@ def draw_lines(n):
         #esse goto coloca as cordenadas do ponto em suas antigas posições, assim a parabola
         #é retraçada e assim monta uma parabola em uma linha continua, não em pontos
         if n == 0:
-            turt.goto(x_positions[i], y_positions[i]-100)
+            #esses -100 que esta aqui é devido ao offset natural da reta
+            #isso se da pois ele spawnou no -100 de x e y, por isso o offset
+            turt.goto(x_positions[i]-100, y_positions[i]-100)
+            turt.down()
         elif n == 1:
-            turt.goto(x_positions[i], y_positions[i]+0)
+            turt.goto(x_positions[i]-100, y_positions[i]-100)
+            turt.down()
         print(str(x_positions[i]))
         print(str(y_positions[i]))
         
-        turt.down()
+    
+    
+
     turt.up()
     turt.goto(-500, 0)
     turt.down()
@@ -83,7 +89,7 @@ def draw_graph(x,y, end, i, n):
         
         
 def math_time():
-    
+    turt.tracer(5)
     turt.speed(10)#isso define a velocidade do grafico
     #essas proximas 4 linhas define que a janela turtle vai
     #aparecer acima de qualquer outra janela, seja o shell, seja
@@ -99,23 +105,23 @@ def math_time():
         for i in range(repeation):
             if n == 0:
                 j = i+1
-                turt.goto(0, -100)
+                turt.goto(-100, -100)
             elif n == 1:
-                turt.goto(0, 0)
+                turt.goto(-100, -100)
                 if i == 0:
                     x_positions.clear()
                     y_positions.clear()
                 j = i+1
             #esse for loop esta aqui para representar varios pontos x
             turt.up()
-            x = j
+            x = j-5
             #para mudar o tamanho, mude o termo do meio
             #para mudar a quantidade de pontos, mude os primeiros termos
             #mas não se esqueçade mudar a variavel repeation e o i do x
             if n == 0:
-                y = x**2*-1 + 12*x + 18
+                y = x**2*-1 + 12*x + 19
             else:
-                y = x**2*1 - 12*x + 18
+                y = x**2*1 - 12*x + 19
                 
 
             #isso é para decidir quanto a linha sera desenhada, esse -1 esta aqui pois se não
@@ -133,12 +139,14 @@ def math_time():
 #define qual grafico sera representado
 choice = ' '
 while choice == ' ':
-    print('escolhas:' + '\nparabola' + '\nnão tenho' + '\ncala a boca mlk EU JA DISSE QUE ACABOU')
+    print('escolhas:' + '\nparabola' + '\nsem formula' + '\ncala a boca mlk EU JA DISSE QUE ACABOU')
     
     choice = input(str('what formula you want to visualize? '))
     
     if choice == 'parabola':
         math_time()
+    elif choice == 'sem formula':
+        draw_lines(0)
     
 
         
